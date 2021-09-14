@@ -44,13 +44,8 @@ router.get('/columnInfo', function(req, res, next) {
         let query = `SELECT COLUMN_NAME, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH FROM INFORMATION_SCHEMA.COLUMNS
         WHERE TABLE_SCHEMA = '${dbOptions.connection.database}' AND TABLE_NAME = '${req.query.table}'
         ORDER BY ORDINAL_POSITION`
-        // let bindings = [ req.db.client.database() ]
-        console.log(req.db.client.database())
-        console.log(query)
         
         req.db.raw(query).then((rows) => {
-            console.log("results")
-            console.log(rows)
             let columnInfo = {};
             for (let i in rows[0]){
                 // COLUMN_NAME, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH 
@@ -61,10 +56,7 @@ router.get('/columnInfo', function(req, res, next) {
                     nullable: r.IS_NULLABLE,
                 }
             }
-            console.log(columnInfo)
-
             res.json({ "columnInfo": columnInfo });
-            // console.log(ts);
         }).catch((e) => {
             res.status(500);
             console.log(e)
@@ -76,8 +68,6 @@ router.get('/columnInfo', function(req, res, next) {
         console.log("error: " + message);
         res.status(401).json({ message: message });
     }
-    console.log("end of columninfo")
-
 });
 
 

@@ -1,13 +1,11 @@
-var config = require('./config');
-const http = config.http;
-const link = config.link;
+var link = require('./config');
 
 // get list of tables in the schema and its column info
 export default function getTables(obj) {
     // enable loading screen
     obj.setState({ loading: true });
 
-    const url = http + `://` + link + `/tables`;
+    const url = link + `/tables`;
     fetch(url, {method: "GET",})
         .then(function (response) {
             // return json version of response if the response is ok
@@ -34,7 +32,7 @@ export function getTable(obj) {
     // enable loading screen
     obj.setState({ loading: true });
 
-    const baseurl = http + `://` + link + `/tables?`;
+    const baseurl = link + `/tables?`;
     let query = 'table=' + obj.props.table;
     const url = baseurl + query
     fetch(url, {method: "GET",})
@@ -65,7 +63,7 @@ export function getTableColumnInfo(obj, targetTable, loadingKey) {
     // enable loading screen
     obj.setState({ [loadingKey]: true });
 
-    const baseurl = http + `://` + link + `/tables/columnInfo?`;
+    const baseurl = link + `/tables/columnInfo?`;
     let query = 'table=' + targetTable;
     const url = baseurl + query
     fetch(url, {method: "GET",})
@@ -111,7 +109,7 @@ export function postTableEditorSubmit(obj, data, subroute, reloadFunc) {
     obj.setState({ loading: true });
 
     // fetch to API with POST
-    const url = http + "://" + link + "/" + subroute
+    const url = link + "/" + subroute
     fetch(url, {
         method: "POST",
         body: JSON.stringify(data),

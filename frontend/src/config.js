@@ -1,8 +1,5 @@
-var config = {};
+const http = "http"; // https / http
+const address = "localhost";
+const port = "3000";
 
-config.http = "http"; // https / http
-config.address = "localhost";
-config.port = "3000";
-config.link = config.address + ":" + config.port;
-
-module.exports = config;
+module.exports = http + "://" + address + ":" + port;

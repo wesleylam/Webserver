@@ -1,8 +1,6 @@
 import './style/App.css';
 import React, { Component } from 'react';
-// import { useState, useEffect } from "react";
 import {
-    // Redirect,
     BrowserRouter as Router,
     Link,
     Route,
@@ -12,25 +10,15 @@ import Table from './Table';
 import getTables from './fetch';
 import logo from "./logo.png"
 
-document.title = "noob"
+document.title = "Mysql web manager"
 
 // Main entry of the app
 class App extends Component {
     constructor(props) {
         super(props);
 
-        // // enable the use of "this" in following methods
-        // this.register = this.register.bind(this);
-        // this.login = this.login.bind(this);
-        // this.logout = this.logout.bind(this);
-
         // initialize states
-        this.state = {
-            // // JWT token for fetch authentication
-            // JWT: sessionStorage.getItem("JWT"),
-            // // store registered email and password after user registers for instant login
-            // registerFollowup: null,
-            
+        this.state = {            
             // enable/disable loading screen
             loading: true,
             tables: []
@@ -90,7 +78,6 @@ class App extends Component {
                     <Route path="/tables/:tb" component={(props) =>
                             <Table table={props.match.params.tb} />}
                         />
-
                 </main>
                 
             </div>

@@ -28,4 +28,4 @@ yarn-error.log*
 # others (Added)
 react_readme.md
 package-lock.json
-/public
+.gitignore

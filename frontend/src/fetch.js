@@ -1,5 +1,6 @@
-const http = "http"; // https / http
-const link = "59.102.55.179:443";
+var config = require('./config');
+const http = config.http;
+const link = config.link;
 
 // get list of tables in the schema and its column info
 export default function getTables(obj) {

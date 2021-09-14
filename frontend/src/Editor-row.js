@@ -1,47 +1,61 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { Component } from 'react';
 import './style/Editor.css';
 
-function clearInputs(setStateLib){
-    for (let c in setStateLib){
-        setStateLib[c]("")
+class EditorRow extends Component {
+    constructor(props) {
+        super(props);
+        
+        // enable the use of this in functions
+        this.clear = this.clear.bind(this);
+
+        // create states of each column (field) values
+        let tempState = {};
+        for (let i in this.props.columns){
+            // set field to either empty or the existing value
+            let c = this.props.columns[i];
+            tempState[c] = (this.props.mode === "Create") ? "" : this.props.fieldValue[c]
+        }
+        // copy tempstate to state
+        this.state = JSON.parse(JSON.stringify(tempState));
+    }
+
+    // can only be called when creating rows
+    clear(){
+        // reset all field to empty string
+        let tempState = {};
+        for (let i in this.props.columns){
+            let c = this.props.columns[i];
+            tempState[c] = ""
+        }
+        this.setState(tempState)
+    }
+
+    // render 
+    render(){        
+        return <div className="entryDivs">
+            {[...this.props.columns].map( (k, i) => { 
+                return <div className="entryDiv"> {k}: &nbsp;
+                    {   
+                        // no edit if: ID while editing or Deleting
+                        (this.props.mode === "Delete" || ((k === "ID") && (this.props.mode === "Edit"))) 
+                        ?
+                        // display only
+                        <b>{this.state[k]}</b>
+                        :
+                        // text input field
+                        <input onChange={e => {this.setState({ [k]: e.target.value })}} value={this.state[k]}/> 
+                    }
+                </div>
+            })}
+
+            {/* submit / clear / cancel button  */}
+            <button id="submit" onClick={() => this.props.submitHandler(this.state)}>{this.props.mode}</button>
+            { this.props.mode === "Create" ? 
+                <button onClick={this.clear}>Clear</button> : null
+            }
+            <button onClick={this.props.closeHandler}>Cancel</button>
+        </div>
     }
 }
 
-export default function EditorRow(props) {
-    // initialize states 
-    const stateLib = {}
-    const setStateLib = {}
-    for (let i in props.columns){
-        let c = props.columns[i];
-        [ stateLib[c], setStateLib[c] ] = useState( (props.mode === "Create") ? "" : props.fieldValue[c] )
-    }
-
-    // propergate back clear button action handler
-    // props.setSubmitFunc( () => props.submitHandler(stateLib) )
-    // props.setClearFunc( () => clearInputs(setStateLib) )
-
-    return <div className="entryDivs">
-        {[...props.columns].map( function(k, i){ 
-            return <div className="entryDiv"> {k}: &nbsp;
-                {   
-                    (props.mode === "Delete" || ((k === "ID") && (props.mode === "Edit"))) 
-                    ?
-                    // display only
-                    <b>{stateLib[k]}</b>
-                    :
-                    // text input field
-                    <input onChange={e => {setStateLib[k](e.target.value)}} value={stateLib[k]}/> 
-                }
-            </div>
-        })}
-
-        {/* submit / clear / cancel button  */}
-        <button id="submit" onClick={() => props.submitHandler(stateLib)}>{props.mode}</button>
-        { props.mode === "Create" ? 
-            <button onClick={() => clearInputs(setStateLib)}>Clear</button> : null
-        }
-        <button onClick={props.closeHandler}>Cancel</button>
-    </div>
-}    
-
+export default EditorRow;

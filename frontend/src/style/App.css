@@ -1,0 +1,141 @@
+.App {
+  /* text-align: center; */
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+/* @keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+div.Nav {
+    position: sticky;
+    top: 0;
+}
+
+ul.Nav {
+    background-color: grey;
+}
+
+ul.Nav li.Links {
+    display: block;
+    color: white;
+    text-align: center;
+    margin: 5px;
+    /* float: left; */
+    background-color: grey;
+    border-radius: 10px;
+    float:left;
+    padding: 16px;
+}
+
+
+ul.Nav li.icon{
+  display: inline-block;
+  text-align: center;
+  font-size: 0px;
+  padding: 0px;
+  background-color: white;
+}
+ul.Nav li.icon img{
+    padding: 5px;
+}
+ul.Nav li:hover{
+  background-color: rgb(49, 49, 49);
+}
+ul.Nav li.icon:hover{
+  background-color: white;
+}
+
+
+
+
+div.NavTableDropdown {
+    display: none;
+    z-index: 1;
+}
+div.NavTableDropdown a{
+    color: black;
+    text-decoration: none;
+}
+ul.Nav li.TablesLink{
+    margin-right: 0px;
+}
+ul.Nav li.IndTableLink{
+    background-color: rgba(255, 255, 255, 0.367);
+    border-radius: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+/* 
+div.TableNavDropdown li {
+    width:100px;
+    height:100px;
+} */
+
+div.NavTable:hover div.NavTableDropdown {
+    display: block;
+}
+div.NavTable:hover li.TablesLink {
+    background-color: rgb(49, 49, 49);
+}
+/* div.App li.NavTablesLink:hover{
+    display: none;
+} */
+
+main{
+    margin: 1% 3%;
+}
+
+
+
+/* tables */
+table{
+    border-collapse: collapse;
+    text-align: center;
+}
+table td,th{
+    margin: 5px;
+    padding: 10px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}

@@ -1,0 +1,17 @@
+table.tablesList td,th{
+}
+
+table.tablesList td.noBorder{
+    border: 0px;
+}
+table.tablesList td.noPadding{
+    padding: 0px;
+}
+
+table.tablesList a{
+    text-decoration: none;
+    color: inherit;
+}
+table.tablesList a:hover td{
+    background-color: rgb(195, 195, 195);
+}

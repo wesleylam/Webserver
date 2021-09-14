@@ -2,6 +2,8 @@ const { query } = require('express');
 var express = require('express');
 var router = express.Router();
 
+const dbOptions = require('../knexfile');
+
 /* GET tables page. */
 router.get('/', function(req, res, next) {
 
@@ -24,7 +26,7 @@ router.get('/', function(req, res, next) {
         req.db.raw(query, bindings).then(function(results) {
             let ts = results[0].map((row) => row.TABLE_NAME);
             res.json({ "tables": ts });
-            console.log(ts);
+            // console.log(ts);
         }).catch((e) => {
             console.log(e)
             res.status(400).json({ message: "oops! your query has some problems" })
@@ -38,14 +40,34 @@ router.get('/columnInfo', function(req, res, next) {
 
     // .../table/info?table=***
     if (Object.keys(req.query).length === 1){
-        let query = req.db.table(req.query.table).columnInfo();
-    
-        query.then((rows) => {
-            // console.log(rows)
-            // console.log(Object.keys(rows))
-            // console.log(Object.keys(rows).length)
-            res.json({ columnInfo: rows});
+
+        let query = `SELECT COLUMN_NAME, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH FROM INFORMATION_SCHEMA.COLUMNS
+        WHERE TABLE_SCHEMA = '${dbOptions.connection.database}' AND TABLE_NAME = '${req.query.table}'
+        ORDER BY ORDINAL_POSITION`
+        // let bindings = [ req.db.client.database() ]
+        console.log(req.db.client.database())
+        console.log(query)
+        
+        req.db.raw(query).then((rows) => {
+            console.log("results")
+            console.log(rows)
+            let columnInfo = {};
+            for (let i in rows[0]){
+                // COLUMN_NAME, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH 
+                let r = rows[0][i]
+                columnInfo[r.COLUMN_NAME] = {
+                    type: r.DATA_TYPE,
+                    maxLength: r.CHARACTER_MAXIMUM_LENGTH,
+                    nullable: r.IS_NULLABLE,
+                }
+            }
+            console.log(columnInfo)
+
+            res.json({ "columnInfo": columnInfo });
+            // console.log(ts);
         }).catch((e) => {
+            res.status(500);
+            console.log(e)
             throw new Error("internal error when getting column info");
         });
 
@@ -54,6 +76,7 @@ router.get('/columnInfo', function(req, res, next) {
         console.log("error: " + message);
         res.status(401).json({ message: message });
     }
+    console.log("end of columninfo")
 
 });
 

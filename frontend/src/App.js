@@ -59,7 +59,7 @@ class App extends Component {
                         : null
                     }
                     </div>
-                    <Link to={`/tables`} className="NavTablesLink"> <li className="Links TablesLink" key="tables3" >TEMP TABLES</li></Link>
+                    {/* <Link to={`/tables`} className="NavTablesLink"> <li className="Links TablesLink" key="tables3" >TEMP TABLES</li></Link> */}
                 </ul>
                 </div>
 

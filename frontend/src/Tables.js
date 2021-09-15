@@ -193,7 +193,7 @@ class Tables extends Component {
             <button onClick={this.openCreateTableEditor}>Create a new table</button> 
             <br/><br/>
             {/* file selector */}
-            <input type="file" name="file" onChange={event=>{console.log(event.target.files[0])}} />
+            {/* <input type="file" name="file" onChange={event=>{console.log(event.target.files[0])}} /> */}
             <br/><br/>
 
 
